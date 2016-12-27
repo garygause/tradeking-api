@@ -1,1 +1,2 @@
-# tradeking-api
+# tkapi
+Unofficial Python client for the TradeKing api
