@@ -1,5 +1,6 @@
 import oauth2 as oauth
 import json
+import urllib
 from datetime import date
 from dateutil.parser import parse
 
@@ -8,15 +9,6 @@ class TKApiClient(object):
     # https://developers.tradeking.com/documentation/
     API_URL = "https://api.tradeking.com/v1"
     STREAM_URL = "https://stream.tradeking.com/v1"
-
-    market_clock_url = api_url + "/market/clock.{0}"
-    market_quotes_url = api_url + "/market/ext/quotes.{0}"
-    market_news_url = api_url + "/market/news/search.{0}"
-    market_newsitem_url = api_url + "/market/news"
-    market_options_url = api_url + "/market/options/search.{0}"
-
-    accounts_url = api_url + "/accounts."
-    quotes_url = api_url + "/market/ext/quotes."
 
     def __init__(self, access_token, access_secret, consumer_key, consumer_secret):
         self.access_token = access_token
@@ -155,7 +147,12 @@ class TKApiClient(object):
         return content
 
     def market_options_search(self, symbol, query=None, fids=None):
-        payload = urllib.urlencode(dict(symbol=symbol, query=query, fids=fids))
+        if fids != None:
+            payload = urllib.urlencode(dict(symbol=symbol, query=query, fids=fids))
+        elif query != None:
+            payload = urllib.urlencode(dict(symbol=symbol, query=query))
+        else:        
+            payload = urllib.urlencode(dict(symbol=symbol))
         url = '{0}/market/options/search.{1}?{2}'.format(self.API_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
