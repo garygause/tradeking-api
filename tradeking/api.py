@@ -60,7 +60,7 @@ class TKApiClient(object):
         param range: all, today, current_week, current_month, last_month
         param transactions: all, bookkeeping, trade
         """
-        payload = urllib.urlencode(dict(range=range, transactions=transactions))
+        payload = urllib.parse.urlencode(dict(range=range, transactions=transactions))
         url = '{0}/accounts/{1}/history.{2}?{3}'.format(self.API_URL, id, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -107,7 +107,7 @@ class TKApiClient(object):
         return content
 
     def market_ext_quotes(self, symbols, fids=''):
-        payload = urllib.urlencode(dict(symbols=symbols, fids=fids))
+        payload = urllib.parse.urlencode(dict(symbols=symbols, fids=fids))
         url = '{0}/market/ext/quotes.{1}?{2}'.format(self.API_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -116,7 +116,7 @@ class TKApiClient(object):
 
 
     def market_historical_search(self, symbols, interval, startdate, enddate):
-        payload = urllib.urlencode(dict(symbols   = symbols, 
+        payload = urllib.parse.urlencode(dict(symbols   = symbols, 
                                         interval  = interval,
                                         startdate = startdate,
                                         enddate   = enddate))
@@ -128,7 +128,7 @@ class TKApiClient(object):
 
 
     def market_news_search(self, keywords, startdate, enddate, symbols=None, maxhits=10):
-        payload = urllib.urlencode(dict(keywords  = keywords, 
+        payload = urllib.parse.urlencode(dict(keywords  = keywords, 
                        symbols   = symbols, 
                        maxhits   = maxhits,
                        startdate = startdate, 
@@ -148,11 +148,11 @@ class TKApiClient(object):
 
     def market_options_search(self, symbol, query=None, fids=None):
         if fids != None:
-            payload = urllib.urlencode(dict(symbol=symbol, query=query, fids=fids))
+            payload = urllib.parse.urlencode(dict(symbol=symbol, query=query, fids=fids))
         elif query != None:
-            payload = urllib.urlencode(dict(symbol=symbol, query=query))
+            payload = urllib.parse.urlencode(dict(symbol=symbol, query=query))
         else:        
-            payload = urllib.urlencode(dict(symbol=symbol))
+            payload = urllib.parse.urlencode(dict(symbol=symbol))
         url = '{0}/market/options/search.{1}?{2}'.format(self.API_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -160,7 +160,7 @@ class TKApiClient(object):
         return content
 
     def market_options_strikes(self, symbol):
-        payload = urllib.urlencode(dict(symbol=symbol))
+        payload = urllib.parse.urlencode(dict(symbol=symbol))
         url = '{0}/market/options/strikes.{1}?{2}'.format(self.API_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -168,7 +168,7 @@ class TKApiClient(object):
         return content
 
     def market_options_expirations(self, symbol):
-        payload = urllib.urlencode(dict(symbol=symbol))
+        payload = urllib.parse.urlencode(dict(symbol=symbol))
         url = '{0}/market/options/expirations.{1}?{2}'.format(self.API_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -176,7 +176,7 @@ class TKApiClient(object):
         return content
 
     def market_timesales(self, symbol):
-        payload = urllib.urlencode(dict(symbol=symbol))
+        payload = urllib.parse.urlencode(dict(symbol=symbol))
         url = '{0}/market/options/expirations.{1}?{2}'.format(self.API_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -200,7 +200,7 @@ class TKApiClient(object):
         topgainers      Top gainers by dollar amount
         toppctgainers   Top percentage gainers
         """
-        payload = urllib.urlencode(dict(exchange=exchange))
+        payload = urllib.parse.urlencode(dict(exchange=exchange))
         url = '{0}/market/toplists/{1}.{2}?{3}'.format(self.API_URL, toplist, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
@@ -236,7 +236,7 @@ class TKApiClient(object):
             elif symbols is None:
                 raise "Need symbols to POST"
             else:
-                payload = urllib.urlencode(dict(symbols=symbols, id=name))
+                payload = urllib.parse.urlencode(dict(symbols=symbols, id=name))
                 url = '{0}/watchlists.{1}?{2}'.format(self.API_URL, self.rtype, payload)
                 resp, content = self.client.request(url, "GET")
                 if (self.rtype == 'json'):
@@ -284,7 +284,7 @@ class TKApiClient(object):
 
 
     def market_quotes(self, symbols):
-        payload = urllib.urlencode(dict(symbols=symbols))
+        payload = urllib.parse.urlencode(dict(symbols=symbols))
         url = '{0}/market/quotes.{1}?{2}'.format(self.STREAM_URL, self.rtype, payload)
         resp, content = self.client.request(url, "GET")
         if (self.rtype == 'json'):
