@@ -186,13 +186,13 @@ class TKApiClient:
             return json.loads(content)
         return content
 
-    def market_timesales(self, symbol):
-        payload = urllib.parse.urlencode(dict(symbol=symbol))
-        url = '{0}/market/options/expirations.{1}?{2}'.format(self.API_URL, self.rtype, payload)
-        resp, content = self.client.request(url, "GET")
-        if (self.rtype == 'json'):
-            return json.loads(content)
-        return content
+    #def market_timesales(self, symbol):
+    #    payload = urllib.parse.urlencode(dict(symbol=symbol))
+    #    url = '{0}/market/options/expirations.{1}?{2}'.format(self.API_URL, self.rtype, payload)
+    #    resp, content = self.client.request(url, "GET")
+    #    if (self.rtype == 'json'):
+    #        return json.loads(content)
+    #    return content
 
     def market_toplists(self, toplist, exchange='N'):
         """
