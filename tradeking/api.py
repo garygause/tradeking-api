@@ -4,7 +4,7 @@ import urllib
 from datetime import date
 from dateutil.parser import parse
 
-class TKApiClient(object):
+class TKApiClient:
 
     # https://developers.tradeking.com/documentation/
     API_URL = "https://api.tradeking.com/v1"
@@ -114,7 +114,18 @@ class TKApiClient(object):
             return json.loads(content)
         return content
 
+    def market_timesales(self, symbols, interval, startdate, enddate):
+        payload = urllib.parse.urlencode(dict(symbols   = symbols,
+                                        interval  = interval,
+                                        startdate = startdate,
+                                        enddate   = enddate))
+        url = '{0}/market/timesales.{1}?{2}'.format(self.API_URL, self.rtype, payload)
+        resp, content = self.client.request(url, "GET")
+        if (self.rtype == 'json'):
+            return json.loads(content)
+        return content
 
+    # deprecated - see market_timesales
     def market_historical_search(self, symbols, interval, startdate, enddate):
         payload = urllib.parse.urlencode(dict(symbols   = symbols, 
                                         interval  = interval,
